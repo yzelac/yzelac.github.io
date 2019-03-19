@@ -1,0 +1,106 @@
+---
+title: "country clean"
+author: "Yucheng Zhu"
+date: "2/27/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(dplyr)
+```
+
+```{r}
+data <- read.csv("nobel_birthdeath_country.csv", header = T)
+
+data[,1] <- NULL
+```
+
+
+```{r}
+head(data)
+data[,1] <- NULL
+
+select_var <- c("Laureate.ID", "Full.Name", "Birth.Country","Death.Country")
+```
+
+```{r}
+df <- data[,select_var]
+
+df[!duplicated(df[1:2]),]
+
+```
+
+```{r}
+birth <- df %>% group_by(Birth.Country) %>% 
+        summarise(count=n())
+
+death <- df %>% group_by(Death.Country) %>% 
+        summarise(count=n())
+
+death
+
+sum(birth$count)
+sum(death$count)
+```
+
+```{r}
+birth$id <- 1
+death$id <- 1
+
+birth <- birth[,c(3,1,2)]
+death <- death[,c(3,1,2)]
+
+colnames(birth)[2] <- "name"
+colnames(death)[2] <- "name"
+
+colnames(birth)[3] <- "population"
+colnames(death)[3] <- "population"
+
+```
+
+
+```{r}
+# birth[,3] <- paste0("'", format(unlist(birth[,3])),"'")
+# death[,3] <- paste0("'", format(unlist(death[,3])),"'")
+```
+
+# read country code
+```{r}
+code <- read.csv("country_code.csv", header = T)
+head(code)
+```
+
+```{r}
+birth$name <- as.character(birth$name)
+birth$id <- as.character(birth$id)
+death$name <- as.character(death$name)
+death$id <- as.character(death$id)
+code$Country <- as.character(code$Country)
+code$Alpha.3.code <- as.character(code$Alpha.3.code)
+
+
+for (i in 1:nrow(birth)){
+  for (j in 1:nrow(code)) {
+    if (birth[i,2]== code[j,1]){
+      birth[i,1] <- code[j,3]
+    }
+  }
+}
+
+for (i in 1:nrow(death)){
+  for (j in 1:nrow(code)) {
+    if (death[i,2]== code[j,1]){
+      death[i,1] <- code[j,3]
+    }
+  }
+}
+
+birth
+death
+```
+
+```{r}
+write.csv(birth, file='birth.csv', row.names = F, quote = F)
+write.csv(death, file='death.csv', row.names = F, quote = F)
+```
+

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+#mySidenav a {
+  position: absolute;
+  left: -70px;
+  transition: 0.3s;
+  padding: 15px;
+  width: 120px;
+  text-decoration: none;
+  font-size: 20px;
+  color: white;
+  border-radius: 0 5px 5px 0;
+}
+
+#mySidenav a:hover {
+  left: 0;
+}
+
+#byCategory {
+  top: 97px;
+  background-color: #4CAF50;
+}
+
+#byAge {
+  top: 157px;
+  background-color: #2196F3;
+}
+
+#byGender {
+  top: 217px;
+  background-color: #f44336;
+}
+
+</style>
+
+<style>
+.accordion {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 70%;
+  border: none;
+  text-align: middle;
+  outline: none;
+  font-size: 15px;
+  transition: 0.4s;
+}
+
+.active, .accordion:hover {
+  background-color: #ccc; 
+}
+
+.panel {
+  padding: 0 18px;
+  display: none;
+  background-color: white;
+  overflow: hidden;
+}
+</style>
+
+</head>
+<body>
+
+<div id="mySidenav" class="sidenav">
+  <a href="../waffle_chart.html" id="byCategory">By Category</a>
+  <a href="../age.html" id="byAge">By Age</a>
+  <a href="../map/map.html" id="byGender">By Country</a>
+</div>
+
+<div style="margin-left:80px;">
+  <h2>Nobel Prize Laureates</h2>
+  <p>Analysis by: Angela Chen, Carson Chen, Sophie Du, Tian Fu, Yucheng Zhu</p>
+</div>
+
+<button class="accordion">By Category</button>
+<div class="panel" style="margin-left:80px;">
+  <p>We explore the distribution of prize laureates in different categories.</p>
+</div>
+
+
+<button class="accordion">By Age</button>
+<div class="panel" style="margin-left:80px;">
+  <p>We explore the distribution of age among prize laureates and across different price categories.</p>
+</div>
+
+<button class="accordion">By Country</button>
+<div class="panel" style="margin-left:80px;">
+  <p>We explore the distribution of prize laureates in across their birth and death countries.</p>
+</div>
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.display === "block") {
+      panel.style.display = "none";
+    } else {
+      panel.style.display = "block";
+    }
+  });
+}
+</script>
+
+</body>
+</html> 
